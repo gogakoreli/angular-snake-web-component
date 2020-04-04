@@ -1,20 +1,26 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule, DoBootstrap, Injector } from '@angular/core';
+import { createCustomElement } from '@angular/elements';
 
-import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
 import { UIButtonComponent } from './uibutton/uibutton.component';
 
 @NgModule({
   declarations: [
-    AppComponent,
     UIButtonComponent
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: []
 })
-export class AppModule { }
+export class AppModule implements DoBootstrap {
+
+  constructor(private injector: Injector) {
+    const webComponent = createCustomElement(UIButtonComponent, { injector });
+    customElements.define('ui-button', webComponent);
+
+  }
+
+  ngDoBootstrap() { }
+}
