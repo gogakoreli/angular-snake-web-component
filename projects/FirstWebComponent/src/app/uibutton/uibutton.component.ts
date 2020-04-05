@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ɵmarkDirty as markDirty } from '@angular/core';
 
 @Component({
   selector: 'app-uibutton',
@@ -12,6 +12,11 @@ export class UIButtonComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
+  }
+
+  public handleClick() {
+    this.label = 'test';
+    markDirty(this);
   }
 
 } 

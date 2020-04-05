@@ -3,10 +3,12 @@ import { NgModule, DoBootstrap, Injector } from '@angular/core';
 import { createCustomElement } from '@angular/elements';
 
 import { UIButtonComponent } from './uibutton/uibutton.component';
+import { SnakeComponent } from './snake/snake.component';
 
 @NgModule({
   declarations: [
-    UIButtonComponent
+    UIButtonComponent,
+    SnakeComponent,
   ],
   imports: [
     BrowserModule,
@@ -16,9 +18,12 @@ import { UIButtonComponent } from './uibutton/uibutton.component';
 })
 export class AppModule implements DoBootstrap {
 
-  constructor(private injector: Injector) {
+  constructor(injector: Injector) {
     const webComponent = createCustomElement(UIButtonComponent, { injector });
     customElements.define('ui-button', webComponent);
+
+    const snakeComponent = createCustomElement(SnakeComponent, { injector });
+    customElements.define('ng-snake', snakeComponent);
 
   }
 
