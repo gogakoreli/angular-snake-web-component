@@ -1,0 +1,43 @@
+.game-container {
+  display: block;
+  width: max-content;
+}
+
+.game-header-container {
+  display: flex;
+}
+
+.game-title {
+  margin: 0;
+}
+
+.game-info-container {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  flex: 1;
+}
+
+.tile-container {
+  display: grid;
+  background: #dedede;
+  grid-gap: 1px 1px;
+  border: solid 1px #dedede;
+  border-radius: 5px;
+}
+
+.tile {
+  width: 20px;
+  height: 20px;
+  border-radius: 5px;
+  background: white;
+  &.snake {
+    background: green;
+  }
+  &.food {
+    background: red;
+  }
+  &.head {
+    background: purple;
+  }
+}
