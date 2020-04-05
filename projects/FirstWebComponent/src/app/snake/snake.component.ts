@@ -1,7 +1,7 @@
 import { Component, OnInit, Injectable, ɵmarkDirty as markDirty, ChangeDetectionStrategy } from '@angular/core';
 import { fromEvent, Subject, BehaviorSubject, Observable, interval } from 'rxjs';
 import { takeUntil, map, distinctUntilChanged } from 'rxjs/operators';
-import { defaultGameState, directionReducer, tickReducer, render } from './snake';
+import { defaultGameState, directionReducer, tickReducer, renderConsole } from './snake';
 import { GameState, Tile } from './models';
 
 @Injectable({ providedIn: 'root' })
@@ -59,13 +59,13 @@ export class SnakeComponent implements OnInit {
     this.store.select().pipe(
       takeUntil(this.unsubscribe$),
     ).subscribe(state => {
-      render(state);
+      renderConsole(state);
       this.state = state;
       markDirty(this);
     })
   }
 
-  public trackByTile(index: number, tile: Tile) {
+  public trackByIndex(index: number): number {
     return index;
   }
 

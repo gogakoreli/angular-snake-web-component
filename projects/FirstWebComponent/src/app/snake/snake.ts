@@ -190,7 +190,7 @@ function getDirection(event: KeyboardEvent): Direction {
   return newDirection;
 }
 
-export function render(state: GameState) {
+export function renderConsole(state: GameState) {
   if (state.shouldRender) {
     const map = state.game.map;
     const strGrid = map.grid
@@ -206,6 +206,3 @@ export function render(state: GameState) {
     console.log();
   }
 }
-
-
-

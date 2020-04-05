@@ -1,8 +1,9 @@
 <div class="tile-container" *ngIf="state">
-  <ng-container *ngFor="let row of grid; index as rowIndex">
+  <ng-container
+    *ngFor="let row of grid; index as rowIndex; trackBy: trackByIndex">
     <div class="tile" [class.food]="tile.isFood" [class.snake]="tile.isSnake"
-      [class.head]="tile.isSnakeHead" *ngFor="let tile of row"
-      [ngStyle]="{ 'grid-row': rowIndex + 1 }">
+      [class.head]="tile.isSnakeHead" [ngStyle]="{ 'grid-row': rowIndex + 1 }"
+      *ngFor="let tile of row; trackBy: trackByIndex">
     </div>
   </ng-container>
 </div>
