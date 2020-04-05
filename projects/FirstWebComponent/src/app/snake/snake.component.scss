@@ -4,17 +4,16 @@
 
 .tile-container {
   display: grid;
-  background: gray;
+  background: #dedede;
   grid-gap: 1px 1px;
-  border: solid 1px gray;
-  background: white;
-  padding: 1px;
+  border: solid 1px #dedede;
+  border-radius: 5px;
 }
 
 .tile {
   width: 20px;
   height: 20px;
-  border-radius: 10px;
+  border-radius: 5px;
   background: white;
   &.snake {
     background: green;

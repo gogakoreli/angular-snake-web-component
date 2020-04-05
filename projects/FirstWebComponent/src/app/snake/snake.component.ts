@@ -23,7 +23,7 @@ export class Store {
   }
 }
 
-const TICK_INTERVAL = 300;
+const TICK_INTERVAL = 150;
 
 @Component({
   selector: 'app-snake',
