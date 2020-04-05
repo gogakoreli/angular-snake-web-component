@@ -11,11 +11,10 @@ export function defaultGameState(): GameState {
 }
 
 function defaultGame(): Game {
-  return {
-    food: defaultFood(),
-    map: defaultMap(),
-    snake: defaultSnake(),
-  };
+  const food = defaultFood();
+  const snake = defaultSnake();
+  const map = updateMap(defaultMap(), snake, food);
+  return { snake, map, food };
 }
 
 function defaultSnake(): Snake {
@@ -101,23 +100,25 @@ function getNewHead(snake: Snake) {
 }
 
 function validNextDirection(curr: Direction, next: Direction): boolean {
-  let result = true;
-  switch (curr) {
-    case Direction.North:
-      result = next !== Direction.South;
-      break;
-    case Direction.East:
-      result = next !== Direction.West;
-      break;
-    case Direction.South:
-      result = next !== Direction.North;
-      break;
-    case Direction.West:
-      result = next !== Direction.East;
-      break;
-    case Direction.None:
-      result = false;
-      break;
+  let result = false;
+  if (next !== Direction.None) {
+    switch (curr) {
+      case Direction.North:
+        result = next !== Direction.South;
+        break;
+      case Direction.East:
+        result = next !== Direction.West;
+        break;
+      case Direction.South:
+        result = next !== Direction.North;
+        break;
+      case Direction.West:
+        result = next !== Direction.East;
+        break;
+      case Direction.None:
+        result = false;
+        break;
+    }
   }
   return result;
 }
