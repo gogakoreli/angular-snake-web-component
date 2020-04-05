@@ -1,6 +1,6 @@
 import { Component, OnInit, ɵmarkDirty as markDirty, ChangeDetectionStrategy, HostBinding } from '@angular/core';
-import { fromEvent, Subject, interval } from 'rxjs';
-import { takeUntil, tap } from 'rxjs/operators';
+import { fromEvent, Subject, interval, BehaviorSubject, merge, of } from 'rxjs';
+import { takeUntil, tap, switchMap } from 'rxjs/operators';
 import { Store } from './store.service';
 import { directionReducer, tickReducer } from './snake';
 import { GameState, Tile } from './models';
@@ -19,6 +19,8 @@ export class SnakeComponent implements OnInit {
 
   public state: GameState;
 
+  private running = new BehaviorSubject<boolean>(false);
+
   private unsubscribe$ = new Subject();
 
   public get grid(): Tile[][] {
@@ -36,19 +38,28 @@ export class SnakeComponent implements OnInit {
       tap(() => this.store.reduce(tickReducer)),
     );
 
-    const state$ = this.store.select().pipe(
+    const game$ = merge(direction$, tick$);
+
+    this.running.pipe(
+      switchMap((running) => running ? game$ : of({})),
+      takeUntil(this.unsubscribe$),
+    ).subscribe();
+
+    this.store.select().pipe(
       tap(state => {
-        console.log(state);
         this.state = state;
         markDirty(this);
       }),
-    );
-
-    state$.subscribe();
+      takeUntil(this.unsubscribe$),
+    ).subscribe();
   }
 
   public handleStartClick() {
+    this.running.next(true);
+  }
 
+  public handleStopClick() {
+    this.running.next(false);
   }
 
   public trackByIndex(index: number): number {
