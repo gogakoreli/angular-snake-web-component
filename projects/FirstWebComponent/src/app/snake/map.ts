@@ -66,9 +66,9 @@ function initGrid(setItem: (i: number, j: number) => Tile): Tile[][] {
   return grid;
 }
 
-export function randomFood(game: Game, refresh = true): Food {
+export function randomFood(game: Game, findNew = true): Food {
   let food = game.food;
-  if (refresh) {
+  if (findNew) {
     while (true) {
       const i = Math.floor(Math.random() * MAP_WIDTH);
       const j = Math.floor(Math.random() * MAP_HEIGHT);

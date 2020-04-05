@@ -32,73 +32,6 @@ function defaultFood(): Food {
   return { i: 0, j: 10 };
 }
 
-export function updateDirection(snake: Snake, direction: Direction): Snake {
-  if (validNextDirection(snake.direction, direction)) {
-    snake = {
-      ...snake,
-      direction,
-    };
-  }
-  return snake;
-}
-
-export function moveToDirection(snake: Snake, food: Food): Snake {
-  let newParts = snake.parts;
-  const newHead = getNewHead(snake);
-  newParts.push(newHead);
-
-  return {
-    ...snake,
-    head: newHead,
-    parts: newParts,
-    length: newParts.length,
-  };
-}
-
-export function snakeFoodEaten(snake: Snake, food: Food) {
-  const foodEaten = hasFoodEaten(snake, food);
-  let parts = snake.parts;
-  if (!foodEaten) {
-    parts = parts.filter((_, i) => i > 0);
-  }
-
-  return {
-    ...snake,
-    foodEaten,
-    parts,
-    length: parts.length,
-  };
-}
-
-/**
- * @description shouldn't be used from outside of snake
- * this is mainly for checking by itself to set property foodEaten
- * @see snake.foodEaten for using from outside
- */
-function hasFoodEaten(snake: Snake, food: Food): boolean {
-  return snake.head.i === food.i && snake.head.j === food.j;
-}
-
-function getNewHead(snake: Snake) {
-  const head = snake.head;
-  let newHead: SnakePart;
-  switch (snake.direction) {
-    case Direction.North:
-      newHead = { i: head.i - 1, j: head.j };
-      break;
-    case Direction.East:
-      newHead = { i: head.i, j: head.j + 1 };
-      break;
-    case Direction.South:
-      newHead = { i: head.i + 1, j: head.j };
-      break;
-    case Direction.West:
-      newHead = { i: head.i, j: head.j - 1 };
-      break;
-  }
-  return newHead;
-}
-
 function validNextDirection(curr: Direction, next: Direction): boolean {
   let result = false;
   if (next !== Direction.None) {
@@ -123,9 +56,77 @@ function validNextDirection(curr: Direction, next: Direction): boolean {
   return result;
 }
 
-export function tick(game: Game, direction: Direction): Game {
+function updateDirection(snake: Snake, direction: Direction): Snake {
+  if (validNextDirection(snake.direction, direction)) {
+    snake = {
+      ...snake,
+      direction,
+    };
+  }
+  return snake;
+}
+
+function getNewHead(snake: Snake) {
+  const head = snake.head;
+  let newHead: SnakePart;
+  switch (snake.direction) {
+    case Direction.North:
+      newHead = { i: head.i - 1, j: head.j };
+      break;
+    case Direction.East:
+      newHead = { i: head.i, j: head.j + 1 };
+      break;
+    case Direction.South:
+      newHead = { i: head.i + 1, j: head.j };
+      break;
+    case Direction.West:
+      newHead = { i: head.i, j: head.j - 1 };
+      break;
+  }
+  return newHead;
+}
+
+function isGameOver(game: Game, direction: Direction): boolean {
+  let result = false;
+
+  const snake = game.snake;
+  const newHead = getNewHead(snake);
+
+
+  return result;
+}
+
+function moveToDirection(snake: Snake): Snake {
+  let newParts = snake.parts;
+  const newHead = getNewHead(snake);
+  newParts.push(newHead);
+
+  return {
+    ...snake,
+    head: newHead,
+    parts: newParts,
+    length: newParts.length,
+  };
+}
+
+function snakeFoodEaten(snake: Snake, food: Food) {
+  const foodEaten = snake.head.i === food.i && snake.head.j === food.j;
+  let parts = snake.parts;
+  if (!foodEaten) {
+    parts.splice(0, 1);
+  }
+
+  return {
+    ...snake,
+    foodEaten,
+    parts,
+    length: parts.length,
+  };
+}
+
+function tick(game: Game, direction: Direction): Game {
   game = { ...game, snake: updateDirection(game.snake, direction) };
-  game = { ...game, snake: moveToDirection(game.snake, game.food) };
+  game = { ...game, snake: moveToDirection(game.snake) };
   game = { ...game, snake: snakeFoodEaten(game.snake, game.food) };
   game = { ...game, food: randomFood(game, game.snake.foodEaten) };
 
@@ -153,19 +154,6 @@ export function tickReducer(state: GameState): GameState {
   };
 }
 
-export function directionReducer(state: GameState, event: KeyboardEvent): GameState {
-  let result = state;
-  const newDirection = getDirection(event);
-  if (newDirection !== Direction.None) {
-    result = {
-      ...state,
-      directions: [...state.directions, newDirection],
-      shouldRender: false,
-    };
-  }
-  return result;
-}
-
 function inputToDirection(inputKey: InputKey): Direction {
   let res: Direction = Direction.None;
   switch (inputKey) {
@@ -189,6 +177,19 @@ function getDirection(event: KeyboardEvent): Direction {
   const inputKey = getInputKey(event.keyCode);
   const newDirection = inputToDirection(inputKey);
   return newDirection;
+}
+
+export function directionReducer(state: GameState, event: KeyboardEvent): GameState {
+  let result = state;
+  const newDirection = getDirection(event);
+  if (newDirection !== Direction.None) {
+    result = {
+      ...state,
+      directions: [...state.directions, newDirection],
+      shouldRender: false,
+    };
+  }
+  return result;
 }
 
 export function renderConsole(state: GameState) {

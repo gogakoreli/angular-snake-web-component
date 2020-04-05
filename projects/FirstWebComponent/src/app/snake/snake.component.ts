@@ -1,6 +1,6 @@
 import { Component, OnInit, ɵmarkDirty as markDirty, ChangeDetectionStrategy, HostBinding } from '@angular/core';
 import { fromEvent, Subject, interval, BehaviorSubject, merge, of } from 'rxjs';
-import { takeUntil, tap, switchMap } from 'rxjs/operators';
+import { takeUntil, tap, switchMap, filter } from 'rxjs/operators';
 import { Store } from './store.service';
 import { directionReducer, tickReducer } from './snake';
 import { GameState, Tile } from './models';
@@ -46,6 +46,7 @@ export class SnakeComponent implements OnInit {
     ).subscribe();
 
     this.store.select().pipe(
+      filter(state => state.shouldRender),
       tap(state => {
         this.state = state;
         markDirty(this);
