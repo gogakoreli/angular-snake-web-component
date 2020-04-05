@@ -1,0 +1,28 @@
+:host {
+  display: flex;
+}
+
+.tile-container {
+  display: grid;
+  background: gray;
+  grid-gap: 1px 1px;
+  border: solid 1px gray;
+  background: white;
+  padding: 1px;
+}
+
+.tile {
+  width: 20px;
+  height: 20px;
+  border-radius: 10px;
+  background: white;
+  &.snake {
+    background: green;
+  }
+  &.food {
+    background: red;
+  }
+  &.head {
+    background: purple;
+  }
+}

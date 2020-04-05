@@ -1,8 +1,8 @@
 import { Component, OnInit, Injectable, ɵmarkDirty as markDirty, ChangeDetectionStrategy } from '@angular/core';
 import { fromEvent, Subject, BehaviorSubject, Observable, interval } from 'rxjs';
-import { takeUntil, map } from 'rxjs/operators';
-import { defaultGameState, getDirectionReducer, tickReducer, render } from './snake';
-import { GameState } from './models';
+import { takeUntil, map, distinctUntilChanged } from 'rxjs/operators';
+import { defaultGameState, directionReducer, tickReducer, render } from './snake';
+import { GameState, Tile } from './models';
 
 @Injectable({ providedIn: 'root' })
 export class Store {
@@ -13,6 +13,7 @@ export class Store {
     selector = selector ?? (state => state);
     return this.state.asObservable().pipe(
       map(selector),
+      distinctUntilChanged(),
     );
   }
 
@@ -36,14 +37,17 @@ export class SnakeComponent implements OnInit {
 
   private unsubscribe$ = new Subject();
 
+  public get grid(): Tile[][] {
+    return this.state.game.map.grid;
+  }
+
   constructor(private store: Store) { }
 
   ngOnInit() {
     fromEvent(document, 'keydown').pipe(
       takeUntil(this.unsubscribe$),
     ).subscribe((event: KeyboardEvent) => {
-      const directionReducer = getDirectionReducer(event);
-      this.store.reduce(directionReducer);
+      this.store.reduce(state => directionReducer(state, event));
     });
 
     interval(TICK_INTERVAL).pipe(
@@ -59,6 +63,10 @@ export class SnakeComponent implements OnInit {
       this.state = state;
       markDirty(this);
     })
+  }
+
+  public trackByTile(index: number, tile: Tile) {
+    return index;
   }
 
 }

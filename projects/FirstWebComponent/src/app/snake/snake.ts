@@ -152,13 +152,17 @@ export function tickReducer(state: GameState): GameState {
   };
 }
 
-export function getDirectionReducer(event: KeyboardEvent) {
+export function directionReducer(state: GameState, event: KeyboardEvent): GameState {
+  let result = state;
   const newDirection = getDirection(event);
-  return (state: GameState): GameState => ({
-    ...state,
-    directions: [...state.directions, newDirection],
-    shouldRender: false,
-  });
+  if (newDirection !== Direction.None) {
+    result = {
+      ...state,
+      directions: [...state.directions, newDirection],
+      shouldRender: false,
+    };
+  }
+  return result;
 }
 
 function inputToDirection(inputKey: InputKey): Direction {
