@@ -9,6 +9,7 @@ export class Store {
   private state = new BehaviorSubject<GameState>(defaultGameState());
 
   public select(): Observable<GameState>
+  public select<T>(selector: (state: GameState) => T): Observable<T>
   public select<T>(selector?: (state: GameState) => T | GameState): Observable<T | GameState> {
     selector = selector ?? (state => state);
     return this.state.asObservable().pipe(

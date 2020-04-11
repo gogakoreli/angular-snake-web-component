@@ -14,7 +14,8 @@ function defaultGame(): Game {
   const food = defaultFood();
   const snake = defaultSnake();
   const map = updateMap(defaultMap(), snake, food);
-  return { snake, map, food };
+  const gameOver = false;
+  return { snake, map, food, gameOver };
 }
 
 function defaultSnake(): Snake {
@@ -111,43 +112,46 @@ function snakeFoodEaten(snake: Snake, food: Food): Snake {
 }
 
 function isGameOver(game: Game): boolean {
-  let result = false;
-  const snakeHead = game.snake.head;
-  if (!isInBorders(game.map, snakeHead.i, snakeHead.j) ||
-    isSnakeTile(game.map, snakeHead.i, snakeHead.j)) {
-    result = true;
+  const snake = game.snake;
+  const head = snake.head;
+  let inBorders = isInBorders(game.map, head.i, head.j);
+  let overlap = false;
+  if (inBorders) {
+    snake.parts.forEach(part => {
+      if (part !== head && part.i === head.i && part.j === head.j) {
+        overlap = true;
+      }
+    });
   }
-  console.log(result);
-
-  return result;
+  return !inBorders || overlap;
 }
 
 function tick(game: Game, direction: Direction): Game {
   game = { ...game, snake: moveToDirection(game.snake, direction) };
   game = { ...game, snake: snakeFoodEaten(game.snake, game.food) };
   game = { ...game, food: randomFood(game, game.snake.foodEaten) };
-
-  game = { ...game, map: updateMap(game.map, game.snake, game.food) };
-
+  game = { ...game, gameOver: isGameOver(game) };
+  if (!game.gameOver) {
+    game = { ...game, map: updateMap(game.map, game.snake, game.food) };
+  }
   return game;
 }
 
 export function tickReducer(state: GameState): GameState {
   const [curDirection, nextDirection, ...rest] = state.directions;
-
   let direction = curDirection;
   if (nextDirection !== undefined) {
     direction = nextDirection;
   }
-  const directions =
-    state.directions.length === 1
-      ? state.directions
-      : [nextDirection, ...rest];
+  const directions = state.directions.length === 1
+    ? state.directions
+    : [nextDirection, ...rest];
+  const game = tick(state.game, direction);
   return {
     ...state,
-    game: tick(state.game, direction),
+    game,
     directions,
-    shouldRender: true,
+    shouldRender: !game.gameOver,
   };
 }
 

@@ -38,6 +38,7 @@ export interface Game {
   snake: Snake;
   map: Map;
   food: Food;
+  gameOver: boolean;
 }
 
 export interface GameState {
