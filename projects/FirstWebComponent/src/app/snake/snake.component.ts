@@ -1,6 +1,6 @@
 import { Component, OnInit, ɵmarkDirty as markDirty, ChangeDetectionStrategy, HostBinding } from '@angular/core';
 import { fromEvent, Subject, interval, BehaviorSubject, merge } from 'rxjs';
-import { takeUntil, tap, switchMap, filter, distinctUntilChanged, takeWhile } from 'rxjs/operators';
+import { takeUntil, tap, switchMap, filter, distinctUntilChanged } from 'rxjs/operators';
 import { Store } from './store.service';
 import { directionReducer, tickReducer } from './snake';
 import { GameState, Tile } from './models';
@@ -37,14 +37,18 @@ export class SnakeComponent implements OnInit {
       tap(() => this.store.reduce(tickReducer)),
     );
     const game$ = merge(direction$, tick$);
+    const gameOver$ = this.store.select(state => state.game.gameOver).pipe(
+      filter(gameOver => gameOver),
+    );
 
     this.running.pipe(
       distinctUntilChanged(),
       switchMap((running) => running ? game$ : []),
-      switchMap(() => this.store.select(state => state.game.gameOver)),
-      takeWhile(gameOver => !gameOver),
+      takeUntil(gameOver$),
       takeUntil(this.unsubscribe$),
-    ).subscribe();
+    ).subscribe({
+      complete: () => console.log('completed')
+    });
 
     this.store.select().pipe(
       filter(state => state.shouldRender),
