@@ -27,6 +27,10 @@ export class SnakeComponent implements OnInit {
     return this.state.game.map.grid;
   }
 
+  public get isRunning(): boolean {
+    return this.running.value;
+  }
+
   constructor(private store: Store) { }
 
   ngOnInit() {
@@ -37,12 +41,14 @@ export class SnakeComponent implements OnInit {
       tap(() => this.store.reduce(tickReducer)),
     );
     const game$ = merge(direction$, tick$);
+
     const gameOver$ = this.store.select(state => state.game.gameOver).pipe(
       filter(gameOver => gameOver),
     );
 
     this.running.pipe(
       distinctUntilChanged(),
+      tap(() => markDirty(this)),
       switchMap((running) => running ? game$ : []),
       takeUntil(gameOver$),
       takeUntil(this.unsubscribe$),
@@ -64,7 +70,7 @@ export class SnakeComponent implements OnInit {
     this.running.next(true);
   }
 
-  public handleStopClick() {
+  public handlePauseClick() {
     this.running.next(false);
   }
 

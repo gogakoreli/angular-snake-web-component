@@ -67,9 +67,9 @@ function emptyGrid(): Tile[][] {
 
 function initGrid(setItem: (i: number, j: number) => Tile): Tile[][] {
   const grid: Tile[][] = [];
-  for (let i = 0; i < MAP_WIDTH; i++) {
+  for (let i = 0; i < MAP_HEIGHT; i++) {
     grid[i] = [];
-    for (let j = 0; j < MAP_HEIGHT; j++) {
+    for (let j = 0; j < MAP_WIDTH; j++) {
       grid[i][j] = setItem(i, j);
     }
   }
@@ -80,8 +80,8 @@ export function randomFood(game: Game, findNew = true): Food {
   let food = game.food;
   if (findNew) {
     while (true) {
-      const i = Math.floor(Math.random() * MAP_WIDTH);
-      const j = Math.floor(Math.random() * MAP_HEIGHT);
+      const i = Math.floor(Math.random() * MAP_HEIGHT);
+      const j = Math.floor(Math.random() * MAP_WIDTH);
       if (isEmptyTile(game.map, i, j)) {
         food = { i, j };
         break;

@@ -1,8 +1,9 @@
 <div class="game-header-container">
   <h1 class="game-title">Snake</h1>
+  <span class="game-score">Score: {{ state.game.snake.length - 3 }}</span>
   <div class="game-info-container">
-    <button (click)="handleStartClick()">Start Game</button>
-    <button (click)="handleStopClick()">Pause Game</button>
+    <button (click)="handleStartClick()" *ngIf="!isRunning">Start Game</button>
+    <button (click)="handlePauseClick()" *ngIf="isRunning">Pause Game</button>
   </div>
 </div>
 
@@ -20,7 +21,7 @@
   <div class="game-over" *ngIf="state.game.gameOver">
     Game Over
     <br />
-    Score: {{ state.game.snake.length }}
+    Score: {{ state.game.snake.length - 3 }}
     <!-- <button (click)="handleResetClick()">Reset</button> -->
   </div>
 </div>

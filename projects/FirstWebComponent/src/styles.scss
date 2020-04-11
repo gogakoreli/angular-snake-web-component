@@ -14,13 +14,19 @@ button {
 
 .game-title {
   margin: 0;
+  flex: 1;
+}
+
+.game-score {
+  display: flex;
+  align-items: center;
 }
 
 .game-info-container {
+  flex: 1;
   display: flex;
   align-items: center;
   justify-content: flex-end;
-  flex: 1;
 }
 
 .snake-grid-container {
@@ -41,10 +47,18 @@ button {
 .game-over {
   position: absolute;
   padding: 20px;
-  border: 1px solid #dedede;
   box-shadow: 0 0 10px 2px #dedede;
+  border: 1px solid #dedede;
   background: white;
-  border-radius: 10px;
+  text-align: center;
+  opacity: 0.8;
+  border-radius: 5px;
+  width: 169px;
+  height: 85px;
+  cursor: default;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .tile {
