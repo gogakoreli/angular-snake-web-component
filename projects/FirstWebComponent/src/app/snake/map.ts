@@ -44,6 +44,16 @@ export function updateMap(map: Map, snake: Snake, food: Food): Map {
   };
 }
 
+export function isInBorders(map: Map, i: number, j: number): boolean {
+  let inBorders = i >= 0 && i < MAP_HEIGHT && j >= 0 && j < MAP_WIDTH;
+  return inBorders;
+}
+
+export function isSnakeTile(map: Map, i: number, j: number): boolean {
+  const tile = map.grid[i][j];
+  return tile.isSnake;
+}
+
 function isEmptyTile(map: Map, i: number, j: number): boolean {
   const tile = map.grid[i][j];
   return !tile.isFood && !tile.isSnake && !tile.isSnakeHead;

@@ -1,6 +1,6 @@
 import { Direction, Food, Snake, SnakePart, Game, GameState } from './models';
 import { InputKey, getInputKey } from './input';
-import { defaultMap, randomFood, updateMap } from './map';
+import { defaultMap, randomFood, updateMap, isInBorders, isSnakeTile } from './map';
 
 export function defaultGameState(): GameState {
   return {
@@ -56,17 +56,7 @@ function validNextDirection(curr: Direction, next: Direction): boolean {
   return result;
 }
 
-function updateDirection(snake: Snake, direction: Direction): Snake {
-  if (validNextDirection(snake.direction, direction)) {
-    snake = {
-      ...snake,
-      direction,
-    };
-  }
-  return snake;
-}
-
-function getNewHead(snake: Snake) {
+function getNewHead(snake: Snake): SnakePart {
   const head = snake.head;
   let newHead: SnakePart;
   switch (snake.direction) {
@@ -86,30 +76,26 @@ function getNewHead(snake: Snake) {
   return newHead;
 }
 
-function isGameOver(game: Game, direction: Direction): boolean {
-  let result = false;
+function moveToDirection(snake: Snake, direction: Direction): Snake {
+  if (validNextDirection(snake.direction, direction)) {
+    snake = {
+      ...snake,
+      direction,
+    };
+  }
 
-  const snake = game.snake;
   const newHead = getNewHead(snake);
-
-
-  return result;
-}
-
-function moveToDirection(snake: Snake): Snake {
-  let newParts = snake.parts;
-  const newHead = getNewHead(snake);
-  newParts.push(newHead);
+  snake.parts.push(newHead);
 
   return {
     ...snake,
     head: newHead,
-    parts: newParts,
-    length: newParts.length,
+    parts: snake.parts,
+    length: snake.parts.length,
   };
 }
 
-function snakeFoodEaten(snake: Snake, food: Food) {
+function snakeFoodEaten(snake: Snake, food: Food): Snake {
   const foodEaten = snake.head.i === food.i && snake.head.j === food.j;
   let parts = snake.parts;
   if (!foodEaten) {
@@ -124,9 +110,20 @@ function snakeFoodEaten(snake: Snake, food: Food) {
   };
 }
 
+function isGameOver(game: Game): boolean {
+  let result = false;
+  const snakeHead = game.snake.head;
+  if (!isInBorders(game.map, snakeHead.i, snakeHead.j) ||
+    isSnakeTile(game.map, snakeHead.i, snakeHead.j)) {
+    result = true;
+  }
+  console.log(result);
+
+  return result;
+}
+
 function tick(game: Game, direction: Direction): Game {
-  game = { ...game, snake: updateDirection(game.snake, direction) };
-  game = { ...game, snake: moveToDirection(game.snake) };
+  game = { ...game, snake: moveToDirection(game.snake, direction) };
   game = { ...game, snake: snakeFoodEaten(game.snake, game.food) };
   game = { ...game, food: randomFood(game, game.snake.foodEaten) };
 
