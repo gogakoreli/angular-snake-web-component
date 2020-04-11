@@ -4,9 +4,11 @@ import { distinctUntilChanged, map } from 'rxjs/operators';
 import { GameState } from './models';
 import { defaultGameState } from './snake';
 
+const DEFAULT_GAME_STATE = defaultGameState();
+
 @Injectable({ providedIn: 'root' })
 export class Store {
-  private state = new BehaviorSubject<GameState>(defaultGameState());
+  private state = new BehaviorSubject<GameState>(DEFAULT_GAME_STATE);
 
   public select(): Observable<GameState>
   public select<T>(selector: (state: GameState) => T): Observable<T>
@@ -21,5 +23,10 @@ export class Store {
   public reduce(reducer: (state: GameState) => GameState) {
     const newState = reducer(this.state.value);
     this.state.next(newState);
+  }
+
+  public reset() {
+    console.log(DEFAULT_GAME_STATE);
+    this.state.next(DEFAULT_GAME_STATE);
   }
 }

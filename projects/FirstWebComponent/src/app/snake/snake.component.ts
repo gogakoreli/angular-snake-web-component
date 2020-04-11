@@ -34,6 +34,11 @@ export class SnakeComponent implements OnInit {
   constructor(private store: Store) { }
 
   ngOnInit() {
+    this.setupGame();
+    this.setupGameRender();
+  }
+
+  private setupGame() {
     const direction$ = fromEvent(document, 'keydown').pipe(
       tap((event: KeyboardEvent) => this.store.reduce(state => directionReducer(state, event))),
     );
@@ -52,10 +57,10 @@ export class SnakeComponent implements OnInit {
       switchMap((running) => running ? game$ : []),
       takeUntil(gameOver$),
       takeUntil(this.unsubscribe$),
-    ).subscribe({
-      complete: () => console.log('completed')
-    });
+    ).subscribe();
+  }
 
+  private setupGameRender() {
     this.store.select().pipe(
       filter(state => state.shouldRender),
       tap(state => {
@@ -75,7 +80,9 @@ export class SnakeComponent implements OnInit {
   }
 
   public handleResetClick() {
-    console.log('reset');
+    this.running.next(false);
+    this.store.reset();
+    this.setupGame();
   }
 
   public trackByIndex(index: number): number {

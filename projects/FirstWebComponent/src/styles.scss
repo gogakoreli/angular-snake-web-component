@@ -44,23 +44,6 @@ button {
   border-radius: 5px;
 }
 
-.game-over {
-  position: absolute;
-  padding: 20px;
-  box-shadow: 0 0 10px 2px #dedede;
-  border: 1px solid #dedede;
-  background: white;
-  text-align: center;
-  opacity: 0.8;
-  border-radius: 5px;
-  width: 169px;
-  height: 85px;
-  cursor: default;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
 .tile {
   width: 20px;
   height: 20px;
@@ -75,4 +58,26 @@ button {
   &.head {
     background: purple;
   }
+}
+
+.game-over {
+  position: absolute;
+  padding: 20px;
+  box-shadow: 0 0 10px 2px #dedede;
+  border: 1px solid #dedede;
+  background: white;
+  text-align: center;
+  opacity: 0.8;
+  border-radius: 5px;
+  width: 169px;
+  height: 85px;
+  cursor: default;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.snake-reset {
+  margin-top: 10px;
 }

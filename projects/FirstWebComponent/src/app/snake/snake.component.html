@@ -19,9 +19,8 @@
   </div>
 
   <div class="game-over" *ngIf="state.game.gameOver">
-    Game Over
-    <br />
-    Score: {{ state.game.snake.length - 3 }}
-    <!-- <button (click)="handleResetClick()">Reset</button> -->
+    <span>Game Over</span>
+    <span>Score: {{ state.game.snake.length - 3 }}</span>
+    <button class="snake-reset" (click)="handleResetClick()">Reset</button>
   </div>
 </div>

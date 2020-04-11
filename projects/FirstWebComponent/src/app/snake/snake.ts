@@ -1,6 +1,6 @@
 import { Direction, Food, Snake, SnakePart, Game, GameState } from './models';
 import { InputKey, getInputKey } from './input';
-import { defaultMap, randomFood, updateMap, isInBorders, isSnakeTile } from './map';
+import { defaultMap, randomFood, updateMap, isInBorders } from './map';
 
 export function defaultGameState(): GameState {
   return {
@@ -86,7 +86,7 @@ function moveToDirection(snake: Snake, direction: Direction): Snake {
   }
 
   const newHead = getNewHead(snake);
-  snake.parts.push(newHead);
+  snake.parts = [...snake.parts, newHead];
 
   return {
     ...snake,
@@ -99,8 +99,10 @@ function moveToDirection(snake: Snake, direction: Direction): Snake {
 function snakeFoodEaten(snake: Snake, food: Food): Snake {
   const foodEaten = snake.head.i === food.i && snake.head.j === food.j;
   let parts = snake.parts;
+
+  let [tail, ...rest] = snake.parts;
   if (!foodEaten) {
-    parts.splice(0, 1);
+    parts = rest;
   }
 
   return {
