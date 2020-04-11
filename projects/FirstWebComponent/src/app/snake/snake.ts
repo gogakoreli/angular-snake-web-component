@@ -207,7 +207,6 @@ export function renderConsole(state: GameState) {
           .join(' '),
       )
       .join('\n');
-    console.log(strGrid);
-    console.log();
+    console.log(strGrid + '\n');
   }
 }

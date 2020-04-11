@@ -26,7 +26,6 @@ export class Store {
   }
 
   public reset() {
-    console.log(DEFAULT_GAME_STATE);
     this.state.next(DEFAULT_GAME_STATE);
   }
 }
