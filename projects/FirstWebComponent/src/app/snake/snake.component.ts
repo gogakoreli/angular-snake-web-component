@@ -40,6 +40,7 @@ export class SnakeComponent implements OnInit {
 
   private setupGame() {
     const direction$ = fromEvent(document, 'keydown').pipe(
+      distinctUntilChanged((a, b) => a === b, (event: KeyboardEvent) => event.keyCode),
       tap((event: KeyboardEvent) => this.store.reduce(state => directionReducer(state, event))),
     );
     const tick$ = interval(TICK_INTERVAL).pipe(
