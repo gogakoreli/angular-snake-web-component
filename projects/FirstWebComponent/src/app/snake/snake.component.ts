@@ -68,6 +68,10 @@ export class SnakeComponent implements OnInit {
     this.running.next(false);
   }
 
+  public handleResetClick() {
+    console.log('reset');
+  }
+
   public trackByIndex(index: number): number {
     return index;
   }

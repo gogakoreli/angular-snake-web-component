@@ -1,6 +1,11 @@
 .game-container {
   display: block;
   width: max-content;
+  font-family: sans-serif;
+}
+
+button {
+  font-family: inherit;
 }
 
 .game-header-container {
@@ -18,12 +23,28 @@
   flex: 1;
 }
 
-.tile-container {
+.snake-grid-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.snake-grid {
   display: grid;
   background: #dedede;
   grid-gap: 1px 1px;
   border: solid 1px #dedede;
   border-radius: 5px;
+}
+
+.game-over {
+  position: absolute;
+  padding: 20px;
+  border: 1px solid #dedede;
+  box-shadow: 0 0 10px 2px #dedede;
+  background: white;
+  border-radius: 10px;
 }
 
 .tile {

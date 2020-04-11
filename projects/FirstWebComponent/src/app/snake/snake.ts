@@ -151,7 +151,7 @@ export function tickReducer(state: GameState): GameState {
     ...state,
     game,
     directions,
-    shouldRender: !game.gameOver,
+    shouldRender: true,
   };
 }
 
