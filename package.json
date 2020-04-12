@@ -6,7 +6,8 @@
     "start": "ng serve",
     "build": "ng build --prod --output-hashing=none",
     "package": "cat dist/snake-web-component/{runtime-es2015,polyfills-es2015,main-es2015}.js | gzip > web/angular-snake-web-component.js.gz",
-    "build-github": "ng build --prod --base-href \"https://gogakoreli.github.io/angular-snake-web-component\"",
+    "build-github": "ng build --prod  --base-href \"https://gogakoreli.github.io/angular-snake-web-component\"",
+    "deploy": "ngh --dir web",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"
@@ -35,6 +36,7 @@
     "@types/node": "^12.11.1",
     "@types/jasmine": "~3.5.0",
     "@types/jasminewd2": "~2.0.3",
+    "angular-cli-ghpages": "0.6.2",
     "codelyzer": "^5.1.2",
     "jasmine-core": "~3.5.0",
     "jasmine-spec-reporter": "~4.2.1",
