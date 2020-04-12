@@ -3,32 +3,32 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "FirstWebComponent": {
+    "snake-web-component": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
           "style": "scss"
         }
       },
-      "root": "projects/FirstWebComponent",
-      "sourceRoot": "projects/FirstWebComponent/src",
+      "root": "projects/snake-web-component",
+      "sourceRoot": "projects/snake-web-component/src",
       "prefix": "app",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/FirstWebComponent",
-            "index": "projects/FirstWebComponent/src/index.html",
-            "main": "projects/FirstWebComponent/src/main.ts",
-            "polyfills": "projects/FirstWebComponent/src/polyfills.ts",
-            "tsConfig": "projects/FirstWebComponent/tsconfig.app.json",
+            "outputPath": "dist/snake-web-component",
+            "index": "projects/snake-web-component/src/index.html",
+            "main": "projects/snake-web-component/src/main.ts",
+            "polyfills": "projects/snake-web-component/src/polyfills.ts",
+            "tsConfig": "projects/snake-web-component/tsconfig.app.json",
             "aot": true,
             "assets": [
-              "projects/FirstWebComponent/src/favicon.ico",
-              "projects/FirstWebComponent/src/assets"
+              "projects/snake-web-component/src/favicon.ico",
+              "projects/snake-web-component/src/assets"
             ],
             "styles": [
-              "projects/FirstWebComponent/src/styles.scss"
+              "projects/snake-web-component/src/styles.scss"
             ],
             "scripts": []
           },
@@ -36,8 +36,8 @@
             "production": {
               "fileReplacements": [
                 {
-                  "replace": "projects/FirstWebComponent/src/environments/environment.ts",
-                  "with": "projects/FirstWebComponent/src/environments/environment.prod.ts"
+                  "replace": "projects/snake-web-component/src/environments/environment.ts",
+                  "with": "projects/snake-web-component/src/environments/environment.prod.ts"
                 }
               ],
               "optimization": true,
@@ -66,33 +66,33 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "FirstWebComponent:build"
+            "browserTarget": "snake-web-component:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "FirstWebComponent:build:production"
+              "browserTarget": "snake-web-component:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "FirstWebComponent:build"
+            "browserTarget": "snake-web-component:build"
           }
         },
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
-            "main": "projects/FirstWebComponent/src/test.ts",
-            "polyfills": "projects/FirstWebComponent/src/polyfills.ts",
-            "tsConfig": "projects/FirstWebComponent/tsconfig.spec.json",
-            "karmaConfig": "projects/FirstWebComponent/karma.conf.js",
+            "main": "projects/snake-web-component/src/test.ts",
+            "polyfills": "projects/snake-web-component/src/polyfills.ts",
+            "tsConfig": "projects/snake-web-component/tsconfig.spec.json",
+            "karmaConfig": "projects/snake-web-component/karma.conf.js",
             "assets": [
-              "projects/FirstWebComponent/src/favicon.ico",
-              "projects/FirstWebComponent/src/assets"
+              "projects/snake-web-component/src/favicon.ico",
+              "projects/snake-web-component/src/assets"
             ],
             "styles": [
-              "projects/FirstWebComponent/src/styles.scss"
+              "projects/snake-web-component/src/styles.scss"
             ],
             "scripts": []
           }
@@ -101,9 +101,9 @@
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
             "tsConfig": [
-              "projects/FirstWebComponent/tsconfig.app.json",
-              "projects/FirstWebComponent/tsconfig.spec.json",
-              "projects/FirstWebComponent/e2e/tsconfig.json"
+              "projects/snake-web-component/tsconfig.app.json",
+              "projects/snake-web-component/tsconfig.spec.json",
+              "projects/snake-web-component/e2e/tsconfig.json"
             ],
             "exclude": [
               "**/node_modules/**"
@@ -113,16 +113,16 @@
         "e2e": {
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
-            "protractorConfig": "projects/FirstWebComponent/e2e/protractor.conf.js",
-            "devServerTarget": "FirstWebComponent:serve"
+            "protractorConfig": "projects/snake-web-component/e2e/protractor.conf.js",
+            "devServerTarget": "snake-web-component:serve"
           },
           "configurations": {
             "production": {
-              "devServerTarget": "FirstWebComponent:serve:production"
+              "devServerTarget": "snake-web-component:serve:production"
             }
           }
         }
       }
     }},
-  "defaultProject": "FirstWebComponent"
+  "defaultProject": "snake-web-component"
 }
