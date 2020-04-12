@@ -4,7 +4,9 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build",
+    "build": "ng build --prod --output-hashing=none",
+    "package": "cat dist/snake-web-component/{runtime-es2015,polyfills-es2015,main-es2015}.js | gzip > web/angular-snake-web-component.js.gz",
+    "build-github": "ng build --prod --base-href \"https://gogakoreli.github.io/angular-snake-web-component\"",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"
