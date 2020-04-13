@@ -114,18 +114,9 @@ function snakeFoodEaten(snake: Snake, food: Food): Snake {
 }
 
 function isGameOver(game: Game): boolean {
-  const snake = game.snake;
-  const head = snake.head;
-  let inBorders = isInBorders(game.map, head.i, head.j);
-  let overlap = false;
-  if (inBorders) {
-    snake.parts.forEach(part => {
-      if (part !== head && part.i === head.i && part.j === head.j) {
-        overlap = true;
-      }
-    });
-  }
-  return !inBorders || overlap;
+  const { snake, snake: { head } } = game;
+  return !isInBorders(game.map, head.i, head.j) ||
+    snake.parts.some(part => part !== head && part.i === head.i && part.j === head.j);
 }
 
 function tick(game: Game, direction: Direction): Game {
