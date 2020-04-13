@@ -1,27 +1,24 @@
-# WebComponents
+# Angular Snake Web Component
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 9.1.0.
+Angular based Snake Game Web component
 
-## Development server
+* Uses `@angular/elements` and `markDirty()`
+* Uses RxJS and Flux pattern
+* Uses pure functions and immutable state
+* No NgZone to reduce bundle
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+## Article
 
-## Code scaffolding
+📝 See Medium article about this project [Angular 9 Snake Web Component](https://medium.com/p/96f61e63b158)
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+## Game
 
-## Build
+snake-web-component.js final size is: 51.3 KB (Gzipped)
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+🎮 Play game at https://gogakoreli.github.io/angular-snake-web-component
 
-## Running unit tests
+⌨️ Use W A S D or Arrow Keys for movement
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+![Alt text](/screenshot.png?raw=true 'Angular Snake Game Snapshot')
 
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+by Goga Koreli
