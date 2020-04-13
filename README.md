@@ -9,7 +9,7 @@ Angular based Snake Game Web component
 
 ## Article
 
-📝 See Medium article about this project [Angular 9 Snake Web Component](https://medium.com/p/96f61e63b158)
+📝 See Medium article about this project [Angular 9 Snake Web Component](https://medium.com/@gogakoreli/angular-9-snake-web-component-96f61e63b158)
 
 ## Game
 
